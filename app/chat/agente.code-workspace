@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "../../../agente"
+		},
+		{
+			"path": "../.."
+		},
+		{
+			"path": "../../../Agente-RPA"
+		}
+	],
+	"settings": {}
+}
