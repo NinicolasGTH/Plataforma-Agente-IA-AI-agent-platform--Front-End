@@ -86,6 +86,12 @@ export default function ChatPage() {
 
       if (!conversaAtual && data.id_conversa) {
         setConversaAtual(data.id_conversa);
+        // Atualiza a lista de conversas para incluir a nova conversa criada
+        const res2 = await fetch("http://localhost:8000/conversas/", {
+          headers: {Authorization: `Bearer ${localStorage.getItem("token")}`},
+        });
+        const data2 = await res2.json();
+        setConversas(Array.isArray(data2) ? data2 : []);
       }
 
       setMensagens((prev) => [

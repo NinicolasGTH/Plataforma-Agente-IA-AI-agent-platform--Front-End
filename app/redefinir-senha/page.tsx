@@ -8,7 +8,6 @@ function RedefinirSenhaForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get("token") || "";
-  const email = searchParams.get("email") || "";
 
   const [novaSenha, setNovaSenha] = useState("");
   const [confirmarSenha, setConfirmarSenha] = useState("");
@@ -28,7 +27,7 @@ function RedefinirSenhaForm() {
       setErro("As senhas não coincidem");
       return;
     }
-    if (!token || !email) {
+    if (!token) {
       setErro("Link inválido. Solicite um novo link de recuperação.");
       return;
     }
@@ -39,7 +38,7 @@ function RedefinirSenhaForm() {
       const res = await fetch("http://localhost:8000/auth/redefinir-senha", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, token, nova_senha: novaSenha }),
+        body: JSON.stringify({token, nova_senha: novaSenha }),
       });
       const data = await res.json();
 
