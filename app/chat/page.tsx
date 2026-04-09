@@ -214,7 +214,14 @@ export default function ChatPage() {
               <div className="text-[10px] text-zinc-500">Online</div>
             </div>
           </div>
-
+          {/* Plano atual com href para redirecionamento e logout */}
+          <div className="flex items-center gap-3">
+            <a 
+            href="/planos"
+            className="rounded-xl border border-cyan-500/30 px-4 py-2 text-sm font-medium text-cyan-400 hover:bg-cyan-500/10 transition-all duration-200"
+            > Upgrade pro 
+            </a>
+          </div> 
           {/* 👇 Botão de logout */}
           <button
             onClick={logout}
