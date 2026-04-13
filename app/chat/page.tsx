@@ -21,13 +21,17 @@ export default function ChatPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [sidebarOpen, setSidebarOpen] = useState(false);
+   const API_URL = typeof window !== "undefined" && (
+    window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
+    ? process.env.NEXT_PUBLIC_API_URL
+    : process.env.NEXT_PUBLIC_API_URL_MOBILE;
 
   const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     async function fetchConversas() {
       try {
-        const res = await fetch("http://localhost:8000/conversas/", {
+        const res = await fetch(`${API_URL}/conversas/`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
@@ -48,7 +52,7 @@ export default function ChatPage() {
 
   async function carregarConversa(id: number) {
     try {
-      const res = await fetch(`http://localhost:8000/conversas/${id}`, {
+      const res = await fetch(`${API_URL}/conversas/${id}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -70,7 +74,7 @@ export default function ChatPage() {
     setMensagens((prev) => [...prev, { papel: "user", conteudo: texto }]); // a Mensagem do usuário é adicionada imediatamente para melhor UX
 
     try {
-      const res = await fetch("http://localhost:8000/chat/enviar", {
+      const res = await fetch(`${API_URL}/chat/enviar`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -86,6 +90,12 @@ export default function ChatPage() {
 
       if (!conversaAtual && data.id_conversa) {
         setConversaAtual(data.id_conversa);
+        // Atualiza a lista de conversas para incluir a nova conversa criada
+        const res2 = await fetch(`${API_URL}/conversas/`, {
+          headers: {Authorization: `Bearer ${localStorage.getItem("token")}`},
+        });
+        const data2 = await res2.json();
+        setConversas(Array.isArray(data2) ? data2 : []);
       }
 
       setMensagens((prev) => [
@@ -208,7 +218,14 @@ export default function ChatPage() {
               <div className="text-[10px] text-zinc-500">Online</div>
             </div>
           </div>
-
+          {/* Plano atual com href para redirecionamento e logout */}
+          <div className="flex items-center gap-3">
+            <a 
+            href="/planos"
+            className="rounded-xl border border-cyan-500/30 px-4 py-2 text-sm font-medium text-cyan-400 hover:bg-cyan-500/10 transition-all duration-200"
+            > Upgrade pro 
+            </a>
+          </div> 
           {/* 👇 Botão de logout */}
           <button
             onClick={logout}

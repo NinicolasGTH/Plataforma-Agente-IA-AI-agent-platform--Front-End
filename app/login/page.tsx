@@ -10,6 +10,10 @@ export default function LoginPage() {
   const [senha, setSenha] = useState("");
   const [erro, setErro] = useState("");
   const [loading, setLoading] = useState(false);
+  const API_URL = typeof window !== "undefined" && (
+    window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
+    ? process.env.NEXT_PUBLIC_API_URL
+    : process.env.NEXT_PUBLIC_API_URL_MOBILE
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -17,7 +21,7 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:8000/auth/login", {
+      const res = await fetch(`${API_URL}/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ nomeUsuario, senha }),
