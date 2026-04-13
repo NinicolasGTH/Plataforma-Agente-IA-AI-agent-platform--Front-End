@@ -1,16 +1,20 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 
-export default function ConfirmarEmailPage() {
+function ConfirmarEmailContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const token = searchParams.get("token");
 
   const [status, setStatus] = useState<"loading" | "success" | "error">("loading");
   const [mensagem, setMensagem] = useState("");
+   const API_URL = typeof window !== "undefined" && (
+    window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
+    ? process.env.NEXT_PUBLIC_API_URL
+    : process.env.NEXT_PUBLIC_API_URL_MOBILE;
 
   useEffect(() => {
     if (!token) {
@@ -22,7 +26,7 @@ export default function ConfirmarEmailPage() {
     async function confirmar() {
       try {
         const res = await fetch(
-          `http://localhost:8000/auth/confirmar-email?token=${token}`
+          `${API_URL}/auth/confirmar-email?token=${token}`
         );
         const data = await res.json();
 
@@ -73,5 +77,19 @@ export default function ConfirmarEmailPage() {
         )}
       </div>
     </main>
+  );
+}
+
+export default function ConfirmarEmailPage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="relative flex min-h-screen items-center justify-center px-6">
+          <p className="text-zinc-400">Carregando...</p>
+        </main>
+      }
+    >
+      <ConfirmarEmailContent />
+    </Suspense>
   );
 }

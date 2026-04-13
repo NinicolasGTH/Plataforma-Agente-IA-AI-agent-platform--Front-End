@@ -14,6 +14,10 @@ export default function RegisterPage() {
   const [loading, setLoading] = useState(false);
   const [sucesso, setSucesso] = useState(false);
   const [contador, setContador] = useState(5);
+  const API_URL = typeof window !== "undefined" && (
+    window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
+    ? process.env.NEXT_PUBLIC_API_URL
+    : process.env.NEXT_PUBLIC_API_URL_MOBILE;
 
   useEffect(() => {
     if (!sucesso) return;
@@ -34,7 +38,7 @@ export default function RegisterPage() {
     }
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:8000/auth/register", {
+      const res = await fetch(`${API_URL}/auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ nomeUsuario, email, senha }),
