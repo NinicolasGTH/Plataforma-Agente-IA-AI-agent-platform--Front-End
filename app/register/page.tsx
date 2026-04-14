@@ -14,7 +14,10 @@ export default function RegisterPage() {
   const [loading, setLoading] = useState(false);
   const [sucesso, setSucesso] = useState(false);
   const [contador, setContador] = useState(5);
-  const API_URL = process.env.NEXT_PUBLIC_API_URL
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+  useEffect(() => {
+    if (!sucesso) return;
     if (contador === 0) {
       router.push("/login");
       return;

@@ -5,7 +5,10 @@ import { Suspense } from "react";
 import {useSearchParams} from "next/navigation";
 import {useEffect, useState} from "react";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+function PagamentoSucessoContent() {
+    const searchParams = useSearchParams();
     const sessionId = searchParams.get("session_id");
 
     const [plano, setPlano] = useState("Carregando...");

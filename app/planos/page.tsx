@@ -4,8 +4,10 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
+export default function PlanosPage() {
+  const router = useRouter();
   const [planoAtual, setPlanoAtual] = useState("Carregando...");
   const [loading, setLoading] = useState(false);
   const [erro, setErro] = useState("");

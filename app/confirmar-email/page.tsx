@@ -11,7 +11,10 @@ function ConfirmarEmailContent() {
 
   const [status, setStatus] = useState<"loading" | "success" | "error">("loading");
   const [mensagem, setMensagem] = useState("");
-  const API_URL = process.env.NEXT_PUBLIC_API_URL
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+  useEffect(() => {
+    if (!token) {
       setStatus("error");
       setMensagem("Token não encontrado.");
       return;

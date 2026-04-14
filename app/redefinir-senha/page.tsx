@@ -14,7 +14,10 @@ function RedefinirSenhaForm() {
   const [erro, setErro] = useState("");
   const [sucesso, setSucesso] = useState(false);
   const [loading, setLoading] = useState(false);
-  const API_URL = process.env.NEXT_PUBLIC_API_URL
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+  async function handleRedefinir(e: React.FormEvent) {
+    e.preventDefault();
     setErro("");
 
     if (novaSenha.length < 6) {
@@ -67,7 +70,7 @@ function RedefinirSenhaForm() {
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleRedefinir} className="space-y-4">
             <div>
               <label className="block text-xs font-medium text-zinc-400 mb-1.5">Nova senha</label>
               <input

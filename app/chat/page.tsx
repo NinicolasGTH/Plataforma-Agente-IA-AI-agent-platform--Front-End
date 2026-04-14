@@ -21,7 +21,9 @@ export default function ChatPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const API_URL = process.env.NEXT_PUBLIC_API_URL
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+  const bottomRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     async function fetchConversas() {
       try {
