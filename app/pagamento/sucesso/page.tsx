@@ -5,13 +5,7 @@ import { Suspense } from "react";
 import {useSearchParams} from "next/navigation";
 import {useEffect, useState} from "react";
 
- const API_URL = typeof window !== "undefined" && (
-    window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
-    ? process.env.NEXT_PUBLIC_API_URL
-    : process.env.NEXT_PUBLIC_API_URL_MOBILE;
-
-function PagamentoSucessoContent() {
-    const searchParams = useSearchParams();
+const API_URL = process.env.NEXT_PUBLIC_API_URL
     const sessionId = searchParams.get("session_id");
 
     const [plano, setPlano] = useState("Carregando...");

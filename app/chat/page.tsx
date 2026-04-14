@@ -21,13 +21,7 @@ export default function ChatPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [sidebarOpen, setSidebarOpen] = useState(false);
-   const API_URL = typeof window !== "undefined" && (
-    window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
-    ? process.env.NEXT_PUBLIC_API_URL
-    : process.env.NEXT_PUBLIC_API_URL_MOBILE;
-
-  const bottomRef = useRef<HTMLDivElement>(null);
-
+  const API_URL = process.env.NEXT_PUBLIC_API_URL
   useEffect(() => {
     async function fetchConversas() {
       try {

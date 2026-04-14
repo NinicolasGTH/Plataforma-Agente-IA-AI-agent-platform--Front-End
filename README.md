@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Agente IA - Frontend
 
-## Getting Started
+Frontend em Next.js para autenticação, chat, planos e checkout.
 
-First, run the development server:
+## Stack
+
+- Next.js (App Router)
+- React + TypeScript
+- Tailwind CSS
+
+## Funcionalidades
+
+- Login e cadastro
+- Confirmação de e-mail
+- Recuperação e redefinição de senha
+- Chat autenticado
+- Página de planos e redirecionamento para checkout Stripe
+- Página de sucesso de pagamento com validação de status
+
+## Executar localmente
+
+1. Instalar dependências
+
+```bash
+npm install
+```
+
+2. Criar `.env` com base no `.env.example`
+
+3. Subir app
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Aplicação: `http://localhost:3000`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Build de produção
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm run start
+```
 
-## Learn More
+## Variáveis de ambiente
 
-To learn more about Next.js, take a look at the following resources:
+Use `.env.example` como referência.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `NEXT_PUBLIC_API_URL`
+- `NEXT_PUBLIC_API_URL_MOBILE`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Em produção, normalmente ambas podem apontar para a API pública.
 
-## Deploy on Vercel
+## Deploy (Vercel)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Importar o repositório no Vercel
+2. Definir variáveis de ambiente
+3. Deploy
+4. Confirmar que o frontend chama a URL pública do backend
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Checklist pós-deploy
+
+1. Cadastro e login
+2. Confirmação de e-mail
+3. Recuperação/redefinição de senha
+4. Chat com token válido
+5. Fluxo de planos/checkout
+6. Página de sucesso com status do plano
+

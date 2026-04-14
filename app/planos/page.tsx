@@ -4,13 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
- const API_URL = typeof window !== "undefined" && (
-    window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
-    ? process.env.NEXT_PUBLIC_API_URL
-    : process.env.NEXT_PUBLIC_API_URL_MOBILE;
-
-export default function PlanosPage() {
-  const router = useRouter();
+const API_URL = process.env.NEXT_PUBLIC_API_URL
 
   const [planoAtual, setPlanoAtual] = useState("Carregando...");
   const [loading, setLoading] = useState(false);

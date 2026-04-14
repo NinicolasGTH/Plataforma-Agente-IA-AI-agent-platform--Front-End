@@ -14,13 +14,7 @@ export default function RegisterPage() {
   const [loading, setLoading] = useState(false);
   const [sucesso, setSucesso] = useState(false);
   const [contador, setContador] = useState(5);
-  const API_URL = typeof window !== "undefined" && (
-    window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
-    ? process.env.NEXT_PUBLIC_API_URL
-    : process.env.NEXT_PUBLIC_API_URL_MOBILE;
-
-  useEffect(() => {
-    if (!sucesso) return;
+  const API_URL = process.env.NEXT_PUBLIC_API_URL
     if (contador === 0) {
       router.push("/login");
       return;
