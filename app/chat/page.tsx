@@ -21,6 +21,8 @@ export default function ChatPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [cancelado, setCancelado] = useState(false);
+  const [mensagemSucesso, setMensagemSucesso] = useState("")
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
   const bottomRef = useRef<HTMLDivElement>(null);
 
@@ -104,6 +106,32 @@ export default function ChatPage() {
       setLoading(false);
     }
   }
+
+  async function cancelarAssinatura() {
+    try {
+      const res = await fetch(`${API_URL}/cancelar-assinatura`,{
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+        }
+      })
+      if (!res.ok) throw new Error ("Erro ao cancelar a assinatura")
+      const data = await res.json();
+      if (data.status === "ok")
+        setCancelado(true);
+        setMensagemSucesso("Sua assinatura foi cancelada com sucesso. Você terá acesso ao pro até o final do período vigente.")
+
+        setTimeout(() => {
+          window.location.reload();
+        }, 3500)
+    } catch (err: unknown) {
+      if (err instanceof Error) setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+      
+      
 
   function novaConversa() {
     setMensagens([]);
@@ -195,41 +223,57 @@ export default function ChatPage() {
 
       {/* HEADER */}
         <header className="h-14 border-b border-zinc-800/50 flex items-center justify-between px-4 md:px-6 glass">
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => setSidebarOpen(true)}
-              className="lg:hidden p-2 rounded-lg hover:bg-zinc-800/60 transition-colors"
-            >
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-              </svg>
-            </button>
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-400 to-cyan-600 shadow-md shadow-cyan-500/20 flex items-center justify-center">
-              <svg className="w-4 h-4 text-zinc-900" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09Z" />
-              </svg>
-            </div>
-            <div>
-              <div className="font-semibold text-sm">Agente IA</div>
-              <div className="text-[10px] text-zinc-500">Online</div>
-            </div>
-          </div>
-          {/* Plano atual com href para redirecionamento e logout */}
-          <div className="flex items-center gap-3">
-            <a 
-            href="/planos"
-            className="rounded-xl border border-cyan-500/30 px-4 py-2 text-sm font-medium text-cyan-400 hover:bg-cyan-500/10 transition-all duration-200"
-            > Upgrade pro 
-            </a>
-          </div> 
-          {/* 👇 Botão de logout */}
-          <button
-            onClick={logout}
-            className="rounded-xl border border-zinc-700/50 px-5 py-2 text-sm font-medium text-zinc-300 hover:text-white hover:border-red-500/50 hover:bg-red-500/10 hover:text-red-400 transition-all duration-200"
-          >
-            Sair
-          </button>
-        </header>
+  <div className="flex items-center gap-3">
+    <button
+      onClick={() => setSidebarOpen(true)}
+      className="lg:hidden p-2 rounded-lg hover:bg-zinc-800/60 transition-colors"
+    >
+      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+      </svg>
+    </button>
+    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-400 to-cyan-600 shadow-md shadow-cyan-500/20 flex items-center justify-center">
+      <svg className="w-4 h-4 text-zinc-900" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09Z" />
+      </svg>
+    </div>
+    <div>
+      <div className="font-semibold text-sm">Agente IA</div>
+      <div className="text-[10px] text-zinc-500">Online</div>
+    </div>
+  </div>
+
+  <div className="flex items-center gap-3">
+    {/* Lógica condicional: Se for Pro, mostra cancelar. Se não, mostra Upgrade. */}
+    {localStorage.getItem("plano") === "Pro" ? (
+      <button 
+        onClick={() => {
+          if (window.confirm("Tem certeza que deseja cancelar sua assinatura Pro?")) {
+            cancelarAssinatura();
+          }
+        }}
+        className="rounded-xl border border-red-500/30 px-4 py-2 text-xs md:text-sm font-medium text-red-400 hover:bg-red-500/10 transition-all duration-200"
+      > 
+        Cancelar Plano
+      </button>
+    ) : (
+      <a 
+        href="/planos"
+        className="rounded-xl border border-cyan-500/30 px-4 py-2 text-sm font-medium text-cyan-400 hover:bg-cyan-500/10 transition-all duration-200"
+      > 
+        Upgrade Pro 🚀
+      </a>
+    )}
+
+    {/* 👇 Botão de logout */}
+    <button
+      onClick={logout}
+      className="rounded-xl border border-zinc-700/50 px-5 py-2 text-sm font-medium text-zinc-300 hover:text-white hover:border-red-500/50 hover:bg-red-500/10 hover:text-red-400 transition-all duration-200"
+    >
+      Sair
+    </button>
+  </div>
+</header>
 
         {/* Messages */}
         <div className="flex-1 overflow-y-auto px-4 md:px-6 py-8">

@@ -8,9 +8,7 @@ import {useEffect, useState} from "react";
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 function PagamentoSucessoContent() {
-    const searchParams = useSearchParams();
-    const sessionId = searchParams.get("session_id");
-
+        
     const [plano, setPlano] = useState("Carregando...");
     const [loading, setLoading] = useState(true);
 
@@ -71,7 +69,10 @@ function PagamentoSucessoContent() {
 
           <h1 className="text-3xl font-bold mb-3">Pagamento realizado com sucesso!</h1>
           <p className="text-zinc-400 mb-2">
-            Seu checkout foi concluído e o Stripe já enviou a confirmação para o backend.
+           Agora você pode aproveitar os benefícios do seu plano. Obrigado por apoiar o Agente IA!
+          </p>
+          <p className="text-zinc-500 text-sm mb-8">
+            Se tiver alguma dúvida ou precisar de ajuda, entre em contato com nosso suporte.
           </p>
 
           <div className="mt-6 mb-8 rounded-xl border border-zinc-700/50 bg-zinc-900/40 p-4 text-left text-sm">
@@ -80,12 +81,9 @@ function PagamentoSucessoContent() {
               {loading ? "verificando..." : plano}
             </p>
 
-            {sessionId && (
-              <p className="text-zinc-500 break-all">
-                <span className="font-medium text-zinc-300">Session ID:</span> {sessionId}
-              </p>
-            )}
           </div>
+            
+          
 
           <div className="flex flex-col sm:flex-row gap-3">
             <Link href="/chat" className="btn-primary inline-flex justify-center w-full">
