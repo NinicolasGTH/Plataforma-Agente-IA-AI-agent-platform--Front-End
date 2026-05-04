@@ -23,11 +23,13 @@ export default function ChatPage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [cancelado, setCancelado] = useState(false);
   const [mensagemSucesso, setMensagemSucesso] = useState("")
+  const [plano, setPlano] = useState<string | null>(null);
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
   const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     async function fetchConversas() {
+      setPlano(localStorage.getItem("plano"));
       try {
         const res = await fetch(`${API_URL}/conversas/`, {
           headers: {
@@ -245,7 +247,7 @@ export default function ChatPage() {
 
   <div className="flex items-center gap-3">
     {/* Lógica condicional: Se for Pro, mostra cancelar. Se não, mostra Upgrade. */}
-    {localStorage.getItem("plano") === "Pro" ? (
+    {plano === "Pro" ? (
       <button 
         onClick={() => {
           if (window.confirm("Tem certeza que deseja cancelar sua assinatura Pro?")) {
