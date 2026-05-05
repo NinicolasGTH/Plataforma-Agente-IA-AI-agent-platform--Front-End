@@ -42,7 +42,8 @@ export default function RegisterPage() {
         body: JSON.stringify({ nomeUsuario, email, senha }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data?.detail || "Falha no registro");
+      const mensagemBackEnd = (data as {detail?: string }).detail || "Falha no Registro "
+      if (!res.ok) throw new Error(mensagemBackEnd);
       setSucesso(true);
     } catch (err) {
       setErro(err instanceof Error ? err.message : "Erro inesperado");

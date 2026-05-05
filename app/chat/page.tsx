@@ -177,7 +177,7 @@ export default function ChatPage() {
 
         <button
           onClick={novaConversa}
-          className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-cyan-500 to-cyan-400 hover:shadow-lg hover:shadow-cyan-500/20 text-zinc-900 font-semibold transition-all duration-200 rounded-xl py-2.5 text-sm"
+          className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-cyan-500 to-cyan-400 hover:shadow-lg hover:shadow-cyan-500/20 text-zinc-900 font-semibold transition-all duration-200 rounded-xl py-2.5 text-sm cursor-pointer"
         >
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -203,7 +203,7 @@ export default function ChatPage() {
                 onClick={() => carregarConversa(c.id)}
                 className={`w-full text-left px-3 py-2.5 text-sm rounded-xl transition-all duration-200 truncate ${conversaAtual === c.id
                   ? "bg-cyan-500/10 text-cyan-400 border border-cyan-500/20"
-                  : "text-zinc-400 hover:bg-zinc-800/60 hover:text-zinc-200"
+                  : "text-zinc-400 hover:bg-zinc-800/60 hover:text-zinc-200 cursor-pointer"
                   }`}
               >
                 {c.titulo || `Conversa ${c.id}`}
@@ -228,7 +228,7 @@ export default function ChatPage() {
   <div className="flex items-center gap-3">
     <button
       onClick={() => setSidebarOpen(true)}
-      className="lg:hidden p-2 rounded-lg hover:bg-zinc-800/60 transition-colors"
+      className="lg:hidden p-2 rounded-lg hover:bg-zinc-800/60 transition-colors cursor-pointer"
     >
       <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
@@ -254,7 +254,7 @@ export default function ChatPage() {
             cancelarAssinatura();
           }
         }}
-        className="rounded-xl border border-red-500/30 px-4 py-2 text-xs md:text-sm font-medium text-red-400 hover:bg-red-500/10 transition-all duration-200"
+        className="rounded-xl border border-red-500/30 px-4 py-2 text-xs md:text-sm font-medium text-red-400 hover:bg-red-500/10 transition-all duration-200 cursor-pointer"
       > 
         Cancelar Plano
       </button>
@@ -263,14 +263,14 @@ export default function ChatPage() {
         href="/planos"
         className="rounded-xl border border-cyan-500/30 px-4 py-2 text-sm font-medium text-cyan-400 hover:bg-cyan-500/10 transition-all duration-200"
       > 
-        Upgrade Pro 🚀
+        Upgrade Pro
       </a>
     )}
 
     {/* 👇 Botão de logout */}
     <button
       onClick={logout}
-      className="rounded-xl border border-zinc-700/50 px-5 py-2 text-sm font-medium text-zinc-300 hover:text-white hover:border-red-500/50 hover:bg-red-500/10 hover:text-red-400 transition-all duration-200"
+      className="rounded-xl border border-zinc-700/50 px-5 py-2 text-sm font-medium text-zinc-300 hover:text-white hover:border-red-500/50 hover:bg-red-500/10 hover:text-red-400 transition-all duration-200 cursor-pointer"
     >
       Sair
     </button>
@@ -388,7 +388,8 @@ export default function ChatPage() {
               <button
                 type="submit"
                 disabled={!texto.trim() || loading}
-                className="flex-shrink-0 bg-gradient-to-r from-cyan-500 to-cyan-400 hover:shadow-lg hover:shadow-cyan-500/20 disabled:opacity-30 disabled:shadow-none text-zinc-900 transition-all duration-200 rounded-xl p-2.5"
+                className="flex-shrink-0 bg-gradient-to-r from-cyan-500 to-cyan-400 hover:shadow-lg hover:shadow-cyan-500/20 disabled:opacity-30 disabled:shadow-none text-zinc-900 transition-all duration-200 rounded-xl p-2.5 cursor-pointer"
+
               >
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />

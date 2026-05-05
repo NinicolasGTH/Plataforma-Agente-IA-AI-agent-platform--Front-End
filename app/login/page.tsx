@@ -28,6 +28,7 @@ export default function LoginPage() {
 
       if (!res.ok) throw new Error(data?.detail || "Falha no login");
       localStorage.setItem("token", data.acesso_token);
+      localStorage.setItem("plano", data.plano || "Gratuito");
       router.push("/chat");
     } catch (err) {
       setErro(err instanceof Error ? err.message : "Erro não esperado");
